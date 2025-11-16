@@ -1,0 +1,7 @@
+{
+  "name": "Bujji - AI Voice Assistant",
+  "description": "A personal AI-powered voice assistant named Bujji that understands Hindi and English and responds with voice answers.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bujji - AI Voice Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #050816;
+        background-image: radial-gradient(circle at top left, rgba(58, 11, 100, 0.2), transparent 40%),
+                          radial-gradient(circle at bottom right, rgba(10, 50, 120, 0.2), transparent 40%);
+      }
+
+      .main-panel {
+        background: rgba(10, 18, 30, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 1.5rem;
+        box-shadow: 0 0 40px rgba(56, 189, 248, 0.1);
+      }
+
+      /* Core Styles */
+      .bar-wrapper {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+      }
+      .bar {
+        background: linear-gradient(to bottom, transparent, #0ea5e9, #0ea5e9, transparent);
+        width: 3px;
+        height: 25px;
+        position: absolute;
+        left: calc(50% - 1.5px);
+        top: -30px;
+        transform-origin: bottom;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .core-glow {
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.4) 0%, rgba(14, 165, 233, 0) 70%);
+        animation: core-glow-anim 4s infinite ease-in-out;
+      }
+      .core-pulse {
+        background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(14, 165, 233, 0) 70%);
+        transform-origin: center;
+        transition: all 0.3s ease;
+      }
+
+      /* State-based animations */
+      .state-idle .bar { animation: idle-breathe 6s infinite ease-in-out; }
+      .state-idle .core-pulse { transform: scale(1); }
+
+      .state-connecting .bar { animation: connecting-ripple 2s infinite ease-out; }
+      .state-connecting .core-pulse { animation: connecting-pulse 1s infinite; }
+
+      .state-listening .bar { animation: listen-pulse 1.2s infinite cubic-bezier(0.45, 0, 0.55, 1); }
+      .state-listening .core-pulse {
+        transform: scale(1.1);
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(56, 189, 248, 0) 70%);
+      }
+
+      .state-speaking .bar { animation: speak-wave 1.5s infinite ease-in-out; }
+      .state-speaking .core-pulse {
+        transform: scale(1.05);
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, rgba(99, 102, 241, 0) 70%);
+      }
+
+      .state-error .bar {
+        background: linear-gradient(to bottom, transparent, #f43f5e, #f43f5e, transparent);
+        animation: error-flicker 0.5s infinite;
+      }
+      .state-error .core-pulse {
+        background: radial-gradient(circle, rgba(244, 63, 94, 0.5) 0%, rgba(244, 63, 94, 0) 70%);
+        animation: error-pulse 0.8s infinite;
+      }
+
+      /* Keyframes */
+      @keyframes core-glow-anim {
+        0%, 100% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
+      @keyframes idle-breathe {
+        0%, 100% { transform: scaleY(0.6); }
+        50% { transform: scaleY(0.8); }
+      }
+      @keyframes connecting-ripple {
+        0% { transform: scaleY(0.1); opacity: 0; }
+        50% { transform: scaleY(0.9); opacity: 1; }
+        100% { transform: scaleY(0.1); opacity: 0; }
+      }
+      @keyframes connecting-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+      }
+      @keyframes listen-pulse {
+        0%, 100% { transform: scaleY(0.8); }
+        50% { transform: scaleY(1.3); }
+      }
+      @keyframes speak-wave {
+        0% { transform: scaleY(0.6); }
+        50% { transform: scaleY(1.1); }
+        100% { transform: scaleY(0.6); }
+      }
+      @keyframes error-flicker {
+        0%, 100% { opacity: 0.8; transform: scaleY(0.4); }
+        50% { opacity: 0.5; transform: scaleY(0.35); }
+      }
+      @keyframes error-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-900 text-white">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
